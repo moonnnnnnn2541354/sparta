@@ -1,0 +1,40 @@
+head 용어
+가로	width : px ;
+세로	height : px ;
+색	color: col;
+선	border : px solid col;
+안쪽여백	padding : px px px px ;
+바깥여백	margin : px px px px ;
+선둥글게	border-radius: px;
+
+중앙맞춤	display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+사진첨부	background-image: url(' ')
+	background-position: center;
+	background-size: cover;
+
+정렬(우)	display: flex;
+	justify-content: end;
+
+
+
+body 용어
+
+묶음	<div></div>
+글씨	<h1></h1> : h6까지 있음
+버튼	<button></button>
+이름지정	<___ class="___">
+
+
+// a href="./member_intro1.html" :: 홈페이지 이동
+<body>
+	<div class="member_card_intro">
+            	<a href="./member_intro1.html" target="_blank"><img src="./src/img/img_gather_town.png" /></a>
+            	<t>팀장</t>
+            	<t>최선학님을 소개합니다</t>
+	</div>
+</body>
+
