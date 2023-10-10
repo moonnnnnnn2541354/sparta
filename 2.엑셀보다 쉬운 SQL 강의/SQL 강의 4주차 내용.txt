@@ -1,0 +1,123 @@
+SELECT u.user_id , u.name , u.email 
+FROM  users u 
+inner join orders o
+on u.user_id = o.user_id 
+WHERE o.payment_method = 'kakaopay'
+
+-----------------------------------------------------------------------------------------------------------
+SELECT user_id ,name, email
+FROM users u 
+WHERE user_id in (
+	SELECT user_id 
+	from orders o 
+	WHERE payment_method = 'kakaopay'
+	)
+
+-----------------------------------------------------------------------------------------------------------
+SELECT  c.checkin_id ,
+		c.user_id ,
+		c.likes ,
+		(SELECT avg(likes) FROM checkins WHERE user_id = c.user_id) as avg_likes_user
+FROM checkins c 
+
+-----------------------------------------------------------------------------------------------------------
+SELECT pu.user_id, pu.point, a.avg_likes
+from point_users pu 
+inner join (SELECT user_id , ROUND(AVG(likes),1) as avg_likes FROM checkins group by user_id 
+			) a on pu.user_id = a.user_id
+
+-----------------------------------------------------------------------------------------------------------
+SELECT *
+FROM point_users pu 
+WHERE point > (SELECT AVG(point) FROM point_users)
+
+-----------------------------------------------------------------------------------------------------------
+SELECT *
+FROM point_users pu 
+WHERE point > (SELECT AVG(point) FROM point_users pu 
+			   inner join users u on pu.user_id = u.user_id WHERE u.name = '이**')
+
+-----------------------------------------------------------------------------------------------------------
+SELECT  c.checkin_id ,
+		c.course_id ,
+		c.user_id ,
+		c.likes ,
+		(SELECT avg(likes) FROM  checkins WHERE course_id = c.course_id ) as course_avg
+FROM checkins c
+
+-----------------------------------------------------------------------------------------------------------
+SELECT  c.checkin_id ,
+		c2.title ,
+		c.user_id ,
+		c.likes ,
+		(SELECT ROUND(avg(likes),1)  FROM  checkins WHERE course_id = c.course_id ) as course_avg
+FROM checkins c
+inner join courses c2 
+on c.course_id = c2.course_id 
+
+
+-----------------------------------------------------------------------------------------------------------
+with table1 as (SELECT course_id, COUNT(DISTINCT(user_id)) as cnt_checkins FROM checkins group by course_id),
+	 table2 as (SELECT course_id, COUNT(*) as cnt_total FROM orders group by course_id) 
+SELECT  c.title,
+		a.cnt_checkins,
+		b.cnt_total,
+		(a.cnt_checkins/b.cnt_total) as ratio
+FROM table1 a 
+inner join table2 b 
+on a.course_id = b.course_id
+INNER join courses c 
+on a.course_id = c.course_id 
+
+-----------------------------------------------------------------------------------------------------------
+SELECT order_no, created_at, SUBSTRING(created_at,1,10) 
+FROM orders o 
+
+SELECT order_no, created_at, SUBSTRING(created_at,12,8) 
+FROM orders o 
+
+-----------------------------------------------------------------------------------------------------------
+SELECT user_id, point,
+		(case when pu.point > 10000 then '2'
+			  when pu.point > 5000 then '1'
+			  else '0' end
+		) as lv
+FROM point_users pu 
+
+-----------------------------------------------------------------------------------------------------------
+SELECT point_user_id, point,
+	  (case when point >= (SELECT avg(point) from point_users) then '잘 하고 있어요.'
+	  		else '열심히 합시다.' end
+	  ) as msg
+FROM point_users pu 
+
+-----------------------------------------------------------------------------------------------------------
+SELECT domain,COUNT(*) as cnt_domain 
+FROM (SELECT SUBSTRING_INDEX(email,'@',-1) as domain FROM users) a
+group by domain
+
+-----------------------------------------------------------------------------------------------------------
+SELECT *
+FROM checkins c
+WHERE comment like '%화이팅%'
+
+-----------------------------------------------------------------------------------------------------------
+with table1 as (SELECT enrolled_id,COUNT(*) as done_cnt FROM enrolleds_detail  WHERE done = 1 group by enrolled_id),
+	   table2 as (SELECT enrolled_id,COUNT(*) as total_cnt FROM enrolleds_detail group by enrolled_id)
+SELECT a.enrolled_id, a.done_cnt, b.total_cnt, ROUND(a.done_cnt/b.total_cnt,2) as ratio
+FROM table1 a
+inner join table2 b
+on a.enrolled_id = b.enrolled_id
+
+-----------------------------------------------------------------------------------------------------------
+SELECT enrolled_id,
+	   SUM(done) as done_cnt, 
+	   COUNT(*) as total_cnt,
+	   ROUND(SUM(done)/COUNT(*),2) as ratio
+FROM enrolleds_detail ed 
+group by enrolled_id 
+
+
+
+
+
