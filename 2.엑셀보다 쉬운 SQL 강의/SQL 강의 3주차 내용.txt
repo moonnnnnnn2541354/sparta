@@ -1,0 +1,130 @@
+SELECT 	* 
+FROM orders o 
+inner join users u on o.user_id = u.user_id 
+
+---------------------------------------------------------------
+SELECT 	* 
+FROM checkins c 
+inner join users u on c.user_id = u.user_id 
+
+---------------------------------------------------------------
+SELECT 	* 
+FROM enrolleds e 
+inner join courses c on e.course_id = c.course_id 
+
+---------------------------------------------------------------
+SELECT 	ch.course_id,
+		co.title,
+		COUNT(*) as cnt
+FROM checkins ch 
+inner join courses co on ch.course_id = co.course_id 
+group by ch.course_id  
+
+---------------------------------------------------------------
+SELECT 	pu.point,
+		u.name,
+		u.email,
+		pu.point
+FROM point_users pu 
+inner join users u on pu.user_id = u.user_id 
+order by pu.point  DESC 
+
+---------------------------------------------------------------
+SELECT 	u.name,
+		COUNT(*) as cnt
+FROM orders o 
+inner join users u on o.user_id = u.user_id 
+WHERE o.email like '%naver.com'
+group by u.name 
+
+---------------------------------------------------------------
+SELECT 	o.payment_method,
+		ROUND(AVG(pu.point),0) as avg_point
+FROM point_users pu 
+inner join orders o on pu.user_id = o.user_id 
+group by o.payment_method 
+
+---------------------------------------------------------------
+SELECT 	u.name,
+		COUNT(*) as cnt_name
+FROM enrolleds e 
+inner join users u on e.user_id = u.user_id 
+WHERE e.is_registered = 0
+group by u.name 
+order by cnt_name DESC 
+
+---------------------------------------------------------------
+SELECT 	c.course_id,
+		c.title,
+		COUNT(*) as cnt_notstart
+FROM courses c 
+inner join enrolleds e on c.course_id = e.course_id 
+WHERE e.is_registered = 0
+group by c.course_id 
+
+---------------------------------------------------------------
+SELECT 	c.title,
+		c2.week,
+		COUNT(*) as cnt
+FROM courses c 
+inner join checkins c2 on c.course_id = c2.course_id 
+group by c.title, c2.week 
+order by c.title DESC , c2.week
+
+---------------------------------------------------------------
+SELECT 	c.title,
+		c2.week,
+		COUNT(*) as cnt 
+FROM courses c 
+inner join checkins c2 on c.course_id = c2.course_id 
+inner join orders o  on c2.user_id = o.user_id 
+WHERE o.created_at >= '2020-08-01'
+group by c.title, c2.week 
+order by c.title, c2.week DESC 
+
+---------------------------------------------------------------
+SELECT 	u.name,
+		COUNT(*) as cnt
+FROM users u 
+left join point_users pu on u.user_id = pu.user_id
+WHERE pu.point_user_id is not NULL 
+group by u.name 
+
+---------------------------------------------------------------
+SELECT 	COUNT(pu.point_user_id) as pnt_user_cnt,
+		COUNT(u.user_id) as tot_user_cnt,
+		ROUND(COUNT(pu.point)/COUNT(u.user_id),2) as ratio 
+FROM users u 
+left join point_users pu on u.user_id = pu.user_id
+WHERE u.created_at BETWEEN '2020-07-10' AND '2020-07-20'
+
+---------------------------------------------------------------
+(select	'8월' as month, 
+		c1.title, 
+		c2.week, 
+		count(*) as cnt 
+from courses c1
+inner join checkins c2 on c1.course_id = c2.course_id
+inner join orders o on c2.user_id = o.user_id
+where o.created_at >= '2020-08-01'
+group by c1.title, c2.week
+) UNION  all (
+select	'7월' as month, 
+		c1.title, 
+		c2.week, 
+		count(*) as cnt 
+from courses c1
+inner join checkins c2 on c1.course_id = c2.course_id
+inner join orders o on c2.user_id = o.user_id
+where o.created_at < '2020-08-01'
+group by c1.title, c2.week)
+
+---------------------------------------------------------------
+SELECT 	e.enrolled_id,
+		e.user_id,
+		COUNT(e.user_id) as max_count
+FROM enrolleds e
+inner join enrolleds_detail ed on e.enrolled_id = ed.enrolled_id 
+WHERE ed.done = 1
+group by e.enrolled_id, e.user_id
+order by max_count DESC

@@ -1,3 +1,6 @@
+1주차  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+ctal + enter   : 실행
+
 show tables   : 테이블명 확인
 select * from   : 테이블명 쿼리 날려보기
 where	: 찾기
@@ -22,6 +25,8 @@ ex) WHERE payment_method = 'kakaopay' LIMIT 5
 Distinct	: 중복제거하기  
 ex) SELECT distinct(payment_method) from orders
 
+
+2주차  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 Count	: 갯수 구하기   
 ex) SELECT COUNT(DISTINCT name)  FROM users
 
@@ -41,15 +46,16 @@ order by	: 정렬(기본:오름차순)    ** 항상 마지막에 적을것
 desc	: 내림차순
 ex) order by count(*) desc
 
+
+3주차  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 as	: 별칭( Alias )
 
-
-left join	: 기존 테이블에 지정한 테이블이랑 합침    ** null 값 나옴
 inner join	: 기존 테이블,지정한테이블 의 교집합들만 나옴    
 ex)	select * from users u 
 	left join point_users pu 
 	on u.user_id = pu.user_id
 
+left join	: 기존 테이블에 지정한 테이블이랑 합침    ** null 값 나옴\
 is null	: null값인것 추출 
 is not null : null값이 아닌것 추출  
 ex) WHERE pu.point_user_id is NULL 
@@ -61,6 +67,7 @@ union all
 ( 두번째코드 )
 
 
+4주차  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 Subquery	: 임의로 table 만들어 사용하기
 ex) WHERE point > (SELECT AVG(point) FROM point_users) // 임의로 정한 테이블을 where절에 사용
 

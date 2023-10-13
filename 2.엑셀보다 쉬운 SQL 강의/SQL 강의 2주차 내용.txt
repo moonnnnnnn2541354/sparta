@@ -1,0 +1,83 @@
+SELECT 	name, 
+		COUNT(*) 
+FROM users u 
+group by name
+
+-------------------------------------------------------------------------
+SELECT 	week,
+		COUNT(*) 
+FROM checkins c 
+group by week 
+
+-------------------------------------------------------------------------
+SELECT 	week,
+		MIN((likes))
+FROM checkins c 
+group by week 
+
+-------------------------------------------------------------------------
+SELECT 	week,
+		MAX((likes)) 
+FROM checkins c 
+group by week 
+
+-------------------------------------------------------------------------
+SELECT 	week,
+		ROUND(AVG((likes)),0) 
+FROM checkins c 
+group by week 
+
+-------------------------------------------------------------------------
+SELECT 	week,
+		SUM(likes) 
+FROM checkins c 
+group by week 
+
+-------------------------------------------------------------------------
+SELECT 	name,
+		COUNT(*) 
+FROM users u 
+group by name 
+order by COUNT(*) DESC  
+
+-------------------------------------------------------------------------
+SELECT	payment_method,
+		COUNT(*) 
+FROM orders o 
+group by payment_method 
+
+-------------------------------------------------------------------------
+SELECT	payment_method,
+		COUNT(*) 
+FROM orders o 
+WHERE course_title = '웹개발 종합반'
+group by payment_method 
+order by COUNT(*) desc  
+
+-------------------------------------------------------------------------
+SELECT	payment_method,
+		COUNT(*) 
+FROM orders o 
+WHERE course_title = '앱개발 종합반'
+group by payment_method 
+
+-------------------------------------------------------------------------
+SELECT	name,
+		COUNT(*) 
+FROM users u 
+WHERE email like '%gmail.com'
+group by name
+
+-------------------------------------------------------------------------
+SELECT	course_id,
+		ROUND(AVG(likes),1) 
+FROM checkins c 
+group by course_id 
+
+-------------------------------------------------------------------------
+SELECT	payment_method,
+		COUNT(*) 
+FROM orders o 
+WHERE email LIKE '%naver.com'
+AND course_title = '앱개발 종합반'
+group by payment_method 
