@@ -8,31 +8,30 @@
 <script>
     function checkResult() {
         let people = [{
-                'name': '서영',
-                'height': 165
-            },
-            {
-                'name': '현아',
-                'height': 170
-            },
-            {
-                'name': '영환',
-                'height': 175
-            },
-            {
-                'name': '서연',
-                'height': 162
-            },
-            {
-                'name': '지용',
-                'height': 190
-            },
-            {
-                'name': '예지',
-                'height': 168
-            }
+            'name': '서영',
+            'height': 165
+        },
+        {
+            'name': '현아',
+            'height': 170
+        },
+        {
+            'name': '영환',
+            'height': 175
+        },
+        {
+            'name': '서연',
+            'height': 162
+        },
+        {
+            'name': '지용',
+            'height': 190
+        },
+        {
+            'name': '예지',
+            'height': 168
+        }
         ]
-
 
         $('#q2').empty()
 
@@ -40,9 +39,6 @@
             let temp_html = `<p>${a['name']}의 키는 ${a['height']}cm 입니다.</p>`
             $('#q2').append(temp_html)
         })
-
-
-
     }
 </script>
 
