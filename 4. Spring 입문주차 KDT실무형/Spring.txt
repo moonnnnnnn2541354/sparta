@@ -25,3 +25,11 @@ Gradle(코끼리아이콘) -> F4 (제일상단 프로젝트이름 마우스우�
 // 이게 있어야 templates 파일을 불러오겠다는 거임
 
 
+
+@Controller
+@Restcontroller
+
+map 을 list로 바꾸는법 stream 사용
+  Map< , > map = new HashMap<>( );
+  List<Map(객체)> list = map.values().stream().map(Map(객체)::new).toList();
+  해석 = Map객체의 map을 돌려서 그것들을 list값을 변환해줘
