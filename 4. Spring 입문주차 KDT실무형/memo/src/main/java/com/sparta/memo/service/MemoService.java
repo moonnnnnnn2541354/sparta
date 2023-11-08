@@ -47,6 +47,10 @@ public class MemoService {
         return memoRepository.findAllByOrderByModifiedAtDesc().stream().map(MemoResponseDto::new).toList();
     }
 
+    public List<MemoResponseDto> getMemosByKeyword(String keyword) {
+        return memoRepository.findAllByContentsContainsOrderByModifiedAtDesc(keyword).stream().map(MemoResponseDto::new).toList();
+    }
+
     @Transactional
     public Long updateMemo(Long id, MemoRequestDto requestDto) {
         // 해당 메모가 DB에 존재하는지 확인하고 있으면 예외처리 update, 없으면 예외처리
@@ -88,4 +92,6 @@ public class MemoService {
         return memoRepository.findById(id).orElseThrow(()->
                 new IllegalArgumentException("선택한 메모는 존재하지 않습니다."));
     }
+
+
 }
