@@ -9,7 +9,7 @@ ctrl + shift + t  :  test폴더 생성
 
 
 lombok ----------------------------------------
-@AllArgsConstructor : 생성자 생성
+@AllArgsConstructor : 필드값을 가진 생성자 생성
 @NoArgsConstructor : 기본 생성자 생성
 @RequiredArgsConstructor : 요구되는 필드대로 만들어지는 생성자 생성
 ** 필드에 final 변수를 준것만 생성자에 입력됨
@@ -33,3 +33,28 @@ map 을 list로 바꾸는법 stream 사용
   Map< , > map = new HashMap<>( );
   List<Map(객체)> list = map.values().stream().map(Map(객체)::new).toList();
   해석 = Map객체의 map을 돌려서 그것들을 list값을 변환해줘
+
+
+
+
+**
+@Generated ** 
+
+
+
+
+
+
+
+포트의 기본값은 8080인데
+어플레이케이션프로펄티스 에 server.port= 8081 주면 포트값이 8081로 변경됨
+
+
+MVC 패턴 (모델 - 뷰 -  컨트롤러)
+모델 데이터,비지니스
+뷰 사용자의 인터페이스
+컨트롤러 모델~뷰 상호작용을 고나리
+
+
+
+redirect: : 재요청하시오
