@@ -2,5 +2,8 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$/.." vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Quiz" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/jpa-core" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/spring-auth" vcs="Git" />
   </component>
 </project>
