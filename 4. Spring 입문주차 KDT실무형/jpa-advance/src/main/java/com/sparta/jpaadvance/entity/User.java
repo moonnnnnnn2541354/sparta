@@ -17,6 +17,7 @@ public class User {
     private Long id;
     private String name;
 
+
     @OneToMany(mappedBy = "user")
-    private List<Order> orderList = new ArrayList<>();
+    private List<Food> foodList = new ArrayList<>();
 }
