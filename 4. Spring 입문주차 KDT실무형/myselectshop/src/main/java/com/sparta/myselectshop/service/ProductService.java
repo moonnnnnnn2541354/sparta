@@ -6,6 +6,8 @@ import com.sparta.myselectshop.dto.ProductResponseDto;
 import com.sparta.myselectshop.entity.Product;
 import com.sparta.myselectshop.repository.ProductRepository;
 import jakarta.validation.constraints.Null;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,5 +38,16 @@ public class ProductService {
 
         product.update(requestDto);
         return new ProductResponseDto(product);
+    }
+
+    public List<ProductResponseDto> getProducts() {
+        //productRepository.findAll().ver 하면 자동완성
+        List<Product> productsList = productRepository.findAll();
+        List<ProductResponseDto> responseDtoList = new ArrayList<>();
+        //iter 하면 자동완성
+        for (Product product : productsList) {
+            responseDtoList.add(new ProductResponseDto(product));
+        }
+        return responseDtoList;
     }
 }
