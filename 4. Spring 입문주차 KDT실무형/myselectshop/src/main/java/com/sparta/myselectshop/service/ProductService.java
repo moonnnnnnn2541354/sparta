@@ -4,9 +4,9 @@ import com.sparta.myselectshop.dto.ProductMypriceRequestDto;
 import com.sparta.myselectshop.dto.ProductRequestDto;
 import com.sparta.myselectshop.dto.ProductResponseDto;
 import com.sparta.myselectshop.entity.Product;
+import com.sparta.myselectshop.entity.User;
 import com.sparta.myselectshop.naver.dto.ItemDto;
 import com.sparta.myselectshop.repository.ProductRepository;
-import jakarta.validation.constraints.Null;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -21,8 +21,8 @@ public class ProductService {
 
     public static final int MIN_MY_PRICE = 100;
 
-    public ProductResponseDto createProduct(ProductRequestDto requestDto) {
-        Product product = productRepository.save(new Product(requestDto));
+    public ProductResponseDto createProduct(ProductRequestDto requestDto, User user) {
+        Product product = productRepository.save(new Product(requestDto,user));
         return new ProductResponseDto(product);
     }
 
@@ -41,9 +41,9 @@ public class ProductService {
         return new ProductResponseDto(product);
     }
 
-    public List<ProductResponseDto> getProducts() {
+    public List<ProductResponseDto> getProducts(User user) {
         //productRepository.findAll().ver 하면 자동완성
-        List<Product> productsList = productRepository.findAll();
+        List<Product> productsList = productRepository.findAllByUser(user);
         List<ProductResponseDto> responseDtoList = new ArrayList<>();
         //iter 하면 자동완성
         for (Product product : productsList) {
@@ -57,5 +57,16 @@ public class ProductService {
         Product product = productRepository.findById(id).orElseThrow(
             () -> new NullPointerException("해당 상품은 찾을 수 없습니다."));
         product.updateByItemDto(itemDto);
+    }
+
+    public List<ProductResponseDto> getAllProducts() {
+        //productRepository.findAll().ver 하면 자동완성
+        List<Product> productsList = productRepository.findAll();
+        List<ProductResponseDto> responseDtoList = new ArrayList<>();
+        //iter 하면 자동완성
+        for (Product product : productsList) {
+            responseDtoList.add(new ProductResponseDto(product));
+        }
+        return responseDtoList;
     }
 }
