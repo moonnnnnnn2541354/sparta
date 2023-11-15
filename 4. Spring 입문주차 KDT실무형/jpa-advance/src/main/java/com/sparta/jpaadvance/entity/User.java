@@ -18,6 +18,11 @@ public class User {
     private String name;
 
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",cascade = CascadeType.PERSIST)
     private List<Food> foodList = new ArrayList<>();
+
+    public void addFoodList(Food food) {
+        this.foodList.add(food);
+        food.setUser(this);
+    }
 }
