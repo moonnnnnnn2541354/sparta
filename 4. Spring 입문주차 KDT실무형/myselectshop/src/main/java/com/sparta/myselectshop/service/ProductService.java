@@ -5,11 +5,16 @@ import com.sparta.myselectshop.dto.ProductRequestDto;
 import com.sparta.myselectshop.dto.ProductResponseDto;
 import com.sparta.myselectshop.entity.Product;
 import com.sparta.myselectshop.entity.User;
+import com.sparta.myselectshop.entity.UserRoleEnum;
 import com.sparta.myselectshop.naver.dto.ItemDto;
 import com.sparta.myselectshop.repository.ProductRepository;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,7 +27,7 @@ public class ProductService {
     public static final int MIN_MY_PRICE = 100;
 
     public ProductResponseDto createProduct(ProductRequestDto requestDto, User user) {
-        Product product = productRepository.save(new Product(requestDto,user));
+        Product product = productRepository.save(new Product(requestDto, user));
         return new ProductResponseDto(product);
     }
 
@@ -31,25 +36,29 @@ public class ProductService {
         int myprice = requestDto.getMyprice();
         if (myprice < MIN_MY_PRICE) {
             throw new IllegalArgumentException("유효하지 않은 관심 가격입니다.\\n"
-                                                + MIN_MY_PRICE + "원 이상으로 설정해 주세요.");
+                + MIN_MY_PRICE + "원 이상으로 설정해 주세요.");
         }
 
         Product product = productRepository.findById(id).orElseThrow(
-                () -> new NullPointerException("해당 상품을 찾을 수 없습니다."));
+            () -> new NullPointerException("해당 상품을 찾을 수 없습니다."));
 
         product.update(requestDto);
         return new ProductResponseDto(product);
     }
 
-    public List<ProductResponseDto> getProducts(User user) {
-        //productRepository.findAll().ver 하면 자동완성
-        List<Product> productsList = productRepository.findAllByUser(user);
-        List<ProductResponseDto> responseDtoList = new ArrayList<>();
-        //iter 하면 자동완성
-        for (Product product : productsList) {
-            responseDtoList.add(new ProductResponseDto(product));
+    public Page<ProductResponseDto> getProducts(User user, int page, int size, String sortBy, boolean isAsc) {
+        Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
+        Sort sort = Sort.by(direction, sortBy);
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        UserRoleEnum userRoleEnum = user.getRole();
+        Page<Product> productList;
+        if (userRoleEnum == UserRoleEnum.USER) {
+            productList = productRepository.findAllByUser(user, pageable);
+        } else {
+            productList = productRepository.findAll(pageable);
         }
-        return responseDtoList;
+        return productList.map(ProductResponseDto::new);
     }
 
     @Transactional
@@ -57,16 +66,5 @@ public class ProductService {
         Product product = productRepository.findById(id).orElseThrow(
             () -> new NullPointerException("해당 상품은 찾을 수 없습니다."));
         product.updateByItemDto(itemDto);
-    }
-
-    public List<ProductResponseDto> getAllProducts() {
-        //productRepository.findAll().ver 하면 자동완성
-        List<Product> productsList = productRepository.findAll();
-        List<ProductResponseDto> responseDtoList = new ArrayList<>();
-        //iter 하면 자동완성
-        for (Product product : productsList) {
-            responseDtoList.add(new ProductResponseDto(product));
-        }
-        return responseDtoList;
     }
 }
