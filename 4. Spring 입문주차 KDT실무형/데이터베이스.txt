@@ -1,0 +1,46 @@
+데이터베이스
+
+DBMS (데이터베이스,메니져멘트 시스템) : 데이터베이스를 운영하는 소프트웨어
+
+
+RDBMS relational DBMS : 관계형 데이터베이스 : mySQL 같은거 ...
+열 ( column ) : 아이디/이름/전화번호 ... 목차 : 쉽게 entity의 필드값
+형 ( row ) : 열의 값들의 집합 ( new 클래스 값 ) : 쉽게 post/get/put/delete 하는 값들
+
+
+
+
+
+SQL :
+
+DDL : create(생성) , alter(수정) , drop(삭제(전부)) , truncate(삭제(컬럼값제외))
+
+DCL : grant(권한부여) , revoke(권한부여회수)
+
+DML : insert(row추가) , select(row선택) , update(row수정) , delete(row삭제)
+
+primary key : 중복된 데이터가 table에 삽입되는것을 방지할수있다 = 데이터를 빠르게 찾을수 있게된다
+foreign key : 서로 다른 table을 연결 해줄수 있게된다
+primary key & foreign key 를 써줌으로써 코드를 간결하게 만들수 있게됨
+
+
+application.properties 코드스니펫 : (데이터베이스 설정)
+spring.datasource.url=jdbc:mysql://localhost:3306/<<데이터베이스 이름>>
+spring.datasource.username=<<설정아이디 : 기본설정은 root>>
+spring.datasource.password=<<비밀번호 : 0000>>
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+
+build.gradle/dependencies 코드스니펫 : (mySQL + jdbc 설정)
+implementation 'mysql:mysql-connector-java:8.0.28'
+implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+
+
+
+mySQL
+1. 패스워드 : mySQL 로그인
+2. show databases; : 데이터베이스 조회
+3. create database <이름> : <이름> 데이터베이스생성
+4. show databases; : 데이터베이스 조회 ( 생성데이터베이스 확인 )
+
+

@@ -1,0 +1,54 @@
+Annotation
+종류 : Lombok , Jpa ...
+
+
+package ...
+import ...
+
+@AllArgsConstructor : 필드값을 가진 생성자 생성
+@NoArgsConstructor : 기본 생성자 생성
+@RequiredArgsConstructor : final이 달린 필드값을 가진 생성자 생성
+@Getter	: getter 메소드 생성
+@Setter	: setter 메소드 생성
+@Controller
+@RestController
+@Entity
+@Service
+@Id
+@RequestMapping("/api") : 각 메소드의 해당 url값을 넣어줌
+@EntityListeners(AuditingEntityListener.class)
+@MappedSuperclass
+@Transactional (read only)
+@Conpernent
+class...{
+
+@Autowired : (클래스 안에 생성자가 1개뿐이라면 안써도됨)
+@GetMapping : Get메소드
+@PostMapping : Post메소드
+@PutMapping : Put메소드
+@DeleteMapping : Delete메소드
+@ResponseBody :
+@Transactional : 모든 행위가 성공해야 실행된다
+**수정해야하는 메소드에 @Transactional 붙이자
+
+@Generated ** 
+
+
+@GeneratedValue
+@Builder -> .builder().~~~.build().
+
+
+of메소드만들기
+@RequestParam
+@PathVariable : 값을 하나만 받아올수 있음
+
+.findById
+.delete
+.orElsethrow
+
+
+abstract
+
+@Primary : 같은타입의 Bean객체가 복수일 경우 @Primary인 Bean객체먼저 적용된다 ( 범용적으로 사용할때에 )
+@Qualifier : 같은타입의 Bean객체가 복수일 경우 @Qualifier지정한 Bean객체를 적용시킨다 ( 지역적으로 사용할때 )
+** 기본이되는것에 @Primary, 특정상황에서만 사용할때 @Qualifier 이런식으로 사용

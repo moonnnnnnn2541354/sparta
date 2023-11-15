@@ -1,0 +1,46 @@
+build.gradle :
+springframework.boot 버전 확인&변경 할수있다
+dependencies 라이브러리 추가 할수있다
+
+서버 :
+RESTful : 웹 서비스를 설계하고 구현하기 위한 간결하고 효율적인 방법 
+RESTful API  : 
+
+
+Annotation ( Lombok , JPA ... )
+메서드,생성자 등을 자동생성해주는 라이브러리
+
+application.properties : 
+server.port 설정 ( 디폴트값은 8080 )
+
+
+Spring MVC :
+Model -> 데이터, 비즈니스 로직
+View -> 사용자 인터페이스
+Controller -> 사용자(View)의 입력을 받아서 Model로 기능을 수행해서 View에 업데이트
+
+과정 :
+Client(브라우저)
+↓ API 요청 (Request)
+↓ **Servlet : 
+	1. DispatcherServlet객체 : 요청 분석(web.xml)
+	2. Handler mapping : Controller에 요청전달
+	3. Controller : 어떤요청인지 찾기 (Post , Get , Put , Delete ...) , 요청처리
+	4. 요청처리된 데이터(Model) , View 정보를 DispatcherServlet에 전달
+	5. DispatcherServlet객체 : 전달받은 데이터(Model)를 View에 적용시켜 Client에 전달(Response)
+	4. 값 반환 및 생성한 객체 소멸
+↓ 값 반환(Response)
+↓ Client
+
+Servlet :
+@WebServlet(urlPatterns = "/user/login")
+메소드 -> doGet , doPost
+
+Controller :
+@Controller -> Controller 역할 수행 할수있게 해줌
+@RequestMapping("/api") -> 중복되는 URL 설정
+@GetMapping("/get") -> API Get메소드
+** Post,Put,Delete 동일
+
+
+

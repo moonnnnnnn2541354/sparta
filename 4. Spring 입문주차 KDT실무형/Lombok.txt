@@ -1,0 +1,86 @@
+
+
+
+
+**controller 없이 그냥 실행하면 static/index.html 파일을 찾아서 실행함
+
+**templates파일이 안 읽어진다면
+Gradle(코끼리아이콘) -> F4 (제일상단 프로젝트이름 마우스우클릭 -> Open Gradle Config)
+-> dependencies 안 -> implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+// 이게 있어야 templates 파일을 불러오겠다는 거임
+
+
+
+
+
+map 을 list로 바꾸는법 stream 사용
+  Map< , > map = new HashMap<>( );
+  List<Map(객체)> list = map.values().stream().map(Map(객체)::new).toList();
+  해석 = Map객체의 map을 돌려서 그것들을 list값을 변환해줘
+
+
+
+
+**
+@Generated ** 
+
+
+
+
+@RestController
+@RequestMapping
+@Entity
+@Getter
+@NoArgsConstructor
+@Id
+@GeneratedValue
+@Builder -> .builder().~~~.build().
+@Service
+@Autowired
+of메소드만들기
+@RequestParam
+@PathVariable : 값을 하나만 받아올수 있음
+@Transactional : 수정해야하는 메소드에 @Transactional 붙이자
+.findById
+.delete
+.orElsethrow
+@MappedSuperclass
+@EntityListeners(AuditingEntityListener.class)
+abstract
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+package ...
+import ...
+
+@AllArgsConstructor : 필드값을 가진 생성자 생성
+@NoArgsConstructor : 기본 생성자 생성
+@RequiredArgsConstructor : final이 달린 필드값을 가진 생성자 생성
+@Getter	: getter 메소드 생성
+@Setter	: setter 메소드 생성
+@Controller
+@Restcontroller
+@RequestMapping : 각 메소드의 해당 url값을 넣어줌
+
+class...{
+
+@GetMapping : Get메소드
+@PostMapping : Post메소드
+@PutMapping : Put메소드
+@DeleteMapping : Delete메소드
+@ResponseBody : 
+
+public ...{
+}}

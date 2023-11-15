@@ -1,0 +1,128 @@
+build.gradle/dependencies : JPA(hibernate),mySQL 추가
+
+// JPA 구현체인 hibernate
+    implementation 'org.hibernate:hibernate-core:6.1.7.Final'
+// MySQL
+    implementation 'mysql:mysql-connector-java:8.0.28'
+
+
+에너테이션
+JPA 기능 // Entity 관련
+
+
+
+@Entity : JPA가 관리할 수 있는 Entity 클래스 지정 //디폴트 = 해당 클래스명 **기본생성자를 사용함
+@Table : 데이터베이스에 매핑할 테이블의 이름을 지정 // 디폴트값은 Entity 클래스명
+@Id : table의 기본키 (필수사항)
+@Column(name = , nullable = true, unique = false) : 컬럼의 이름 // 
+@GeneratedValue(strategy = GenerationType.IDENTITY) -> 자동증감연산자(id bigint not null auto_increment,)
+
+
+
+@Transactional(readOnly = true) -> (readOnly = true)가 되어있으면 해당클래스
+** 수정하는 메소드가 있으면 메소드에 @Transactional 를 쓰면 됨
+** save는 자체적으로 @Transactional이 붙어있어서 안써도됨
+@BeforeEach
+@Test
+
+
+
+
+2-8 영속성 컨텍스트 ( resources/META-INF/persistence.xml ) : entity객체를 효율적으로 관리할수있음
+JPA를 통해 mySQL 같은 프로그램을 쓰지 않아도 db에 접근이 가능해짐
+
+과정 : entity 객체 -> 집합(영속성컨텍스트) -> 저장(JPA) -> DB(Table1,2,3...)
+
+JPA로 하는일 : 영속성컨텍스트 관리 ( entity객체들의 집합 )
+
+EntityManagerFactory : 
+
+persistence.xml 
+저장위치 : /resources/META-INF/persistence.xml 
+하는일 : 
+
+jpa의 트랜잭션
+앤티티 객체 -> 영속성컨텍스트 -> 커밋 -> db
+
+이 과정에서 Setter는 막 쓰면 안됨
+
+
+2-11>>
+application.properties/hibernate코드스니펫 :
+**=create : 기존테이블을 삭제하고 재생성
+=create-drop : 종료시점 테이블을 삭제 재생성
+**=update : 변경된부분만 반영됨
+=validate : 엔티티 테이블 맵핑됬는지 확인
+=non : 아무것도 안함
+
+
+
+@Entity // JPA가 관리할 수 있는 Entity 클래스 지정
+@Getter
+@Setter
+@Table(name = "memo") // 매핑할 테이블의 이름을 지정
+@NoArgsConstructor
+
+@Id
+@GeneratedValue(strategy = GenerationType.IDENTITY)
+@Column(name = "username", nullable = false)
+
+
+
+
+TransactionalTest :
+@SpringBootTest
+@PersistenceContext
+@Test
+    @Transactional
+    @Rollback(value = false) // 테스트 코드에서 @Transactional 를 사용하면 테스트가 완료된 후 롤백하기 때문에 false 옵션 추가
+    @DisplayName("메모 생성 성공")
+@Disabled
+
+
+JPA에는 시간입력기능이 있음
+Timestamped : 추상크래스로 하는게 좋음
+@Getter
+@MappedSuperclass
+@EntityListeners(AuditingEntityListener.class) -> 해당 클래스에 Auditing 기능을 추가해줌(자동으로 시간을 넣어주는기능)
+    @CreatedDate -> 생성기준시간을 넣어줌
+    @Column(updatable = false) -> 시간이 업데이트되지 않게 하기위한설정( true일경우 업데이트될때마다 시간도 갱신됨)
+    @Temporal(TemporalType.TIMESTAMP) -> 출력형식설정 (date타입(년월일), time타입(시분초), timestamp타입(년월일+시분초+5135153)
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate -> 게시글이 업데이트 될때 시간 갱신시켜줌
+    @Column
+    @Temporal(TemporalType.TIMESTAMP)
+    private LocalDateTime modifiedAt;
+타클래스에 설정 :
+application클래스(@SpringBootApplication있는클래스)에 @EnableJpaAuditing 추가
+@entity클래스에 상속하기(extends Timestamped)
+
+
+쿼리 메소드
+MemoRepository :
+List<Memo> findAllByOrderByModifiedAtDesc();
+List<Memo> findAllByUsername(String username);
+
+
+
+
+
+1-16
+1-17
+1-18
+2-2
+2-4
+2-11
+java - 제네릭
+
+
+
+
+
+
+
+@Transactional 다시좀 듣자
+간단 요약 : 수정하려면 메소드에@Transactional붙이기
+@PersistenceContext : EntityManager불러오기
+@Column 기능들

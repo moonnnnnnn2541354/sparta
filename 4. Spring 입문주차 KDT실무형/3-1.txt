@@ -1,0 +1,21 @@
+Bean수동 등록
+Bean으로 Bean을 자동으로 등록하는게 좋음
+언제 0 
+컨퍼런트 
+
+Bean : 컨퍼런트스킨 컨퍼런트 자동스캔 해당 클래스가 bean으로 등록
+
+1-4 다시듣자
+
+3-6
+빌더그레이들 -> Security,JWT
+어플리케이션프로펄티스 -> secret.key
+
+3-7
+빌더그레이들 -> JPA,MySQL
+어플리케이션프로펄티스 -> secret.key
+
+
+3-10
+@EnableWebSecurity
+세션방식

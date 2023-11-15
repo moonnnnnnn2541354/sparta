@@ -1,0 +1,10 @@
+이넘클래스, 인터페이스클래스, 제네릭스클래스 정의하기
+
+어노테이션 : Annotation
+
+@Override 
+
+
+@Transactional
+
+stram
